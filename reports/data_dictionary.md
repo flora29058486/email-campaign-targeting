@@ -10,7 +10,7 @@ Each column has one of three roles:
 
 - **Pre-treatment:** measured before the campaign, so it can be used as a model feature.
 - **Treatment:** the group the customer was randomly assigned to.
-- **Outcome:** measured in the two weeks after the campaign, so it must never be used as a model feature.
+- **Outcome:** measured in the two weeks after the campaign, so it **must never be used as a model feature**.
 
 | Column | Type | Role | Unit | Definition | Observed values |
 | --- | --- | --- | --- | --- | --- |

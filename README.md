@@ -38,8 +38,8 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 
 | # | Question | Answer |
 | --- | --- | --- |
-| 1 | Which e-mail campaign performed the best, the Mens version, or the Womens version? | Not yet answered |
-| 2 | How much incremental sales per customer did the Mens version of the e-mail campaign drive? How much incremental sales per customer did the Womens version of the e-mail campaign drive? | Not yet answered |
+| 1 | Which e-mail campaign performed the best, the Mens version, or the Womens version? | [The Mens email](reports/01_01_average_effects.md). Its lead over the Womens email is significant but imprecisely estimated. |
+| 2 | How much incremental sales per customer did the Mens version of the e-mail campaign drive? How much incremental sales per customer did the Womens version of the e-mail campaign drive? | [About $0.77 per customer for the Mens email and $0.42 for the Womens email](reports/01_01_average_effects.md), over two weeks. |
 | 3 | If you could only send an e-mail campaign to the best 10,000 customers, which customers would receive the e-mail campaign? Why? | Not yet answered |
 | 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | Not yet answered |
 | 5 | Did the Mens version of the e-mail campaign perform different than the Womens version of the e-mail campaign, across various customer segments? | Not yet answered |
@@ -55,7 +55,7 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 | [Exploratory data analysis](reports/00_01_eda_summary.md) | Nov 3, 2026 | Done |
 | [Experiment validity checks](reports/00_02_experiment_validity.md) | Nov 4, 2026 | Done |
 | [Analysis plan](analysis_plan.md) | Nov 5, 2026 | Done |
-| Average effects | Nov 8, 2026 | Not started |
+| [Average effects](reports/01_01_average_effects.md) | Nov 8, 2026 | Done |
 | Segment effects and one-page memo | Nov 15, 2026 | Not started |
 | Uplift model comparison and bias demonstration | Nov 22, 2026 | Not started |
 | Targeting rule, technical report and decision memo | Nov 26, 2026 | Not started |
