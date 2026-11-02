@@ -44,7 +44,7 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 | 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | Not yet answered |
 | 5 | Did the Mens version of the e-mail campaign perform different than the Womens version of the e-mail campaign, across various customer segments? | Not yet answered |
 | 6 | Did the campaigns perform different when measured across different metrics, like Visitors, Conversion, and Total Spend? | Not yet answered |
-| 7 | Did you observe any anomalies, or odd findings? | Not yet answered |
+| 7 | Did you observe any anomalies, or odd findings? | Partly answered: [spend stops at exactly $499 for 12 buyers](reports/00_01_eda_summary.md), which may indicate a cap. |
 | 8 | Which audience would you target the Mens version to, and the Womens version to, given the results of the test? What data do you have to support your recommendation? | Not yet answered |
 
 ## Progress

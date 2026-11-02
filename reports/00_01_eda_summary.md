@@ -8,7 +8,7 @@ This is a first description of the data. It uses overall figures only: the exper
 
 - **Missing values:** there are none.
 - **Misspelling:** "Suburban" is spelled `Surburban` in every suburban row.
-- **Repeated rows:** 6,562 rows exactly repeat an earlier row. All of them have zero spend, and 99.5% have `history` at its minimum of $29.99. With no customer ID, they cannot be separated from different customers who share the same values. Removing them would raise conversion from 0.903% to 1.006%, so **they are kept**.
+- **Repeated rows:** 6,562 rows exactly repeat an earlier row. All of them have zero spend, and 99.5% have `history` at its minimum of $29.99. With no customer ID, they cannot be told apart from different customers who share the same values, so **they are kept**. Removing them would change the results: conversion would rise from 0.903% to 1.006%.
 - **Outcome logic:** the three outcomes are consistent. Every purchase comes with a website visit, and spend is above zero exactly when `conversion` is 1.
 - **Group sizes:** the three groups have 21,387, 21,307 and 21,306 customers. A formal sample-ratio test is in the [experiment validity checks](00_02_experiment_validity.md).
 
