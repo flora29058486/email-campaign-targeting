@@ -2,7 +2,7 @@
 
 An independent project that uses a public randomized experiment of 64,000 retail customers to answer two decision questions: **who should receive a marketing email, and is sending it worth the cost?**
 
-> **Status: in progress (started November 2026).** No campaign effects are reported yet. Findings and the final targeting rule will appear at the top of this page when v1.0 is released.
+> **Status: in progress (started November 2026).** Answers to the first two challenge questions are linked below. Findings and the final targeting rule will appear at the top of this page when v1.0 is released.
 
 ## Why this project
 
