@@ -54,7 +54,7 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 | Project setup and data dictionary | Nov 2, 2026 | Done |
 | [Exploratory data analysis](reports/00_01_eda_summary.md) | Nov 3, 2026 | Done |
 | [Experiment validity checks](reports/00_02_experiment_validity.md) | Nov 4, 2026 | Done |
-| Analysis plan | Nov 5, 2026 | Not started |
+| [Analysis plan](analysis_plan.md) | Nov 5, 2026 | Done |
 | Average effects | Nov 8, 2026 | Not started |
 | Segment effects and one-page memo | Nov 15, 2026 | Not started |
 | Uplift model comparison and bias demonstration | Nov 22, 2026 | Not started |
@@ -71,10 +71,11 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 ## Repository structure
 
 ```text
-data/        Downloaded data (not tracked by Git)
-notebooks/   Analysis notebooks
-reports/     Data dictionary and written reports
-src/         Reusable code, including the data download script
+data/             Downloaded data (not tracked by Git)
+notebooks/        Analysis notebooks
+reports/          Data dictionary and written reports
+src/              Reusable code, including the data download script
+analysis_plan.md  Metrics, hypotheses and decision rule, committed before group outcomes were viewed
 ```
 
 ## Setup
