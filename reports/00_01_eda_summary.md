@@ -1,6 +1,6 @@
 # Exploratory Data Analysis Summary
 
-This is a first description of the data. It uses overall figures only: the experiment groups and customer segments are not compared on outcomes, so nothing here measures whether the emails worked. All numbers and figures come from [`notebooks/01_eda.ipynb`](../notebooks/01_eda.ipynb).
+This is a first description of the data. It uses overall figures only: the experiment groups and customer segments are not compared on outcomes, so nothing here measures whether the emails worked. All numbers and figures come from [`notebooks/00_01_eda.ipynb`](../notebooks/00_01_eda.ipynb).
 
 ## Data quality
 
