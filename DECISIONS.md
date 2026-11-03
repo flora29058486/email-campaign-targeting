@@ -67,3 +67,12 @@ I drafted five hypotheses, with AI help on the statistical wording. Review chang
 ### Feature coefficients are not interpreted
 - **Question:** I asked whether features without significant coefficients, such as `channel` and `zip_code`, could be dropped.
 - **Decision: no.** Only the emails were randomized, so feature coefficients show association, not cause. A feature can be unrelated to how much customers spend and still change how well the email works. H3 and H5 stay in the plan as written.
+
+### H4 keeps the linear trend
+- **Question:** after seeing the effect within each level, I asked whether to test each level as its own group instead of a straight line, because level 3 fell well below the line.
+- **Decision: keep the linear trend from the plan as the confirmatory test.** Switching after seeing the results would mean choosing the analysis that looks best. Separate levels would also give noisier estimates, and the largest of them would likely be overstated. The effect within each level is still reported as a descriptive check.
+- **Follow-up:** comparing a level-based rule with other rules belongs to stages 03 and 04, where it can be checked on held-out data.
+
+### Targeting uses dollars per customer, not a ratio
+- **Context:** per $100 of past-year spend, the effect was highest at level 1, while in dollars per customer it was highest at level 5.
+- **Decision: the targeting rule ranks customers by the effect in dollars per customer.** I reasoned that each email costs the same, so what matters is the extra spend one email brings in. A ratio would matter only if the cost grew with customer value, as with a percentage discount.
