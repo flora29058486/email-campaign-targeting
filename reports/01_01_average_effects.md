@@ -47,6 +47,10 @@ pp = percentage points: the difference between two rates, such as a visit rate o
 
 ![Point estimates and 95% confidence intervals for spend, conversion and visit](figures/average_effects.png)
 
+## Supplementary: regression adjustment
+
+This check was not in the analysis plan. I added the pre-treatment customer features to a regression of spend on the two email indicators. **The estimates changed by less than $0.01, which is consistent with the groups being balanced. The confidence intervals narrowed by less than 0.2%,** because the features explain only 0.1% of the variation in individual spend. The unadjusted Welch estimates therefore remain the main results. The code is in [`notebooks/01_02_regression_adjustment.ipynb`](../notebooks/01_02_regression_adjustment.ipynb).
+
 ## Limitations
 
 - **Effect of assignment, not of reading the email:** the data has no delivery or open records, so these figures describe the effect of being assigned to receive an email.
