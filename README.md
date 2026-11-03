@@ -32,6 +32,20 @@ The data is not stored in this repository. [`src/download_data.py`](src/download
 6. **Bias demonstration:** simulate non-random targeting from the experimental data to show how far observational estimates can drift from the experimental benchmark.
 7. **Targeting rule:** convert the estimates into a profit-based rule, with sensitivity analysis on margin and cost per email.
 
+## Analysis map
+
+**Each stage answers one question and builds on the stage before it.** File names start with the stage number, so `02_01_segment_effects` is the first notebook of stage 02.
+
+| Stage | Question it answers | Challenge questions | Files |
+| --- | --- | --- | --- |
+| 00 Preparation | Can the data and the experiment be trusted? | 7 (partly) | [EDA summary](reports/00_01_eda_summary.md), [experiment validity](reports/00_02_experiment_validity.md) |
+| 01 Average effects | Did the emails work overall? | 1, 2 | [Average effects](reports/01_01_average_effects.md) |
+| 02 Segment effects | For whom did the emails work better? | 5, 6, 8 | In progress |
+| 03 Targeting rule | Whom should we email, and whom should we suppress? | 3, 4 | Not started |
+| 04 Uplift models | Can a model target better than a simple segment rule? | None | Not started |
+| 05 Bias demonstration | How wrong would the estimates be without random assignment? | None | Not started |
+| 06 Profit and sensitivity | Is sending worth it under different cost assumptions? | 3, 4 (final) | Not started |
+
 ## Challenge questions
 
 These are the original questions from the challenge, quoted verbatim. Answers will be linked here as the analysis progresses.
@@ -76,6 +90,7 @@ notebooks/        Analysis notebooks
 reports/          Data dictionary and written reports
 src/              Reusable code, including the data download script
 analysis_plan.md  Metrics, hypotheses and decision rule, committed before group outcomes were viewed
+DECISIONS.md      Dated log of analytical decisions, including mistakes and dropped ideas
 ```
 
 ## Setup
