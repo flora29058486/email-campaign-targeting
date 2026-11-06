@@ -76,3 +76,17 @@ I drafted five hypotheses, with AI help on the statistical wording. Review chang
 ### Targeting uses dollars per customer, not a ratio
 - **Context:** per $100 of past-year spend, the effect was highest at level 1, while in dollars per customer it was highest at level 5.
 - **Decision: the targeting rule ranks customers by the effect in dollars per customer.** I reasoned that each email costs the same, so what matters is the extra spend one email brings in. A ratio would matter only if the cost grew with customer value, as with a percentage discount.
+
+## 2026-11-06
+
+### The "worth sending" categories no longer overlap
+- **Problem:** after review, the plan's two categories were found to overlap. A segment whose estimate is above break-even ($0.02 per customer at a 40% margin and $0.008 per email) but whose confidence interval includes break-even is both "worth sending" and "uncertain". Without a rule for this case, the label could be chosen after seeing the results.
+- **Decision: the three categories are made mutually exclusive.** Claude proposed the definitions and I agreed:
+  - **Worth sending:** the lower end of the 95% confidence interval for incremental spend is above break-even.
+  - **Uncertain:** the estimate is above break-even, but the interval includes it.
+  - **Not worth sending:** the estimate is at or below break-even.
+- **Timing:** this was fixed before any segment was classified. `analysis_plan.md` is unchanged, so this entry is the amendment. The revenue-first scenario and the sensitivity grid are unchanged.
+
+### Secondary metrics are not called significant
+- **What happened:** the first draft of the segment effects report said that the Womens email's differences in visit and conversion were "significant". After review, this was found to conflict with the plan, which does not use secondary metrics to claim significance.
+- **Decision: the report and the notebook now say that the confidence intervals exclude zero, and the report, the notebook and the README call these results supporting evidence,** because secondary metrics are not corrected for multiple testing.
