@@ -90,3 +90,28 @@ I drafted five hypotheses, with AI help on the statistical wording. Review chang
 ### Secondary metrics are not called significant
 - **What happened:** the first draft of the segment effects report said that the Womens email's differences in visit and conversion were "significant". After review, this was found to conflict with the plan, which does not use secondary metrics to claim significance.
 - **Decision: the report and the notebook now say that the confidence intervals exclude zero, and the report, the notebook and the README call these results supporting evidence,** because secondary metrics are not corrected for multiple testing.
+
+## 2026-11-07
+
+These choices for the stage 03 targeting rule were fixed before any segment-level effect for the rule was estimated. Only customer counts and the overall standard deviation of spend were used to make them.
+
+### Segments cross past-year spend with past purchases
+- **Question:** I decided that segment variables may be crossed. Claude pointed out that crossing many variables leaves most segments with a few hundred customers.
+- **Decision: segments cross `history_level` with past purchases (men's only, women's only, or both).** Past purchases decide which email to send, which challenge question 8 asks about. Past-year spend is the variable used to rank customers by dollars. Recency, channel and zip code are left for the uplift models in stage 04, which can use all features at once.
+- **Note:** customers who bought both lines appear only at level 3 ($200) and above.
+
+### At least 1,000 customers per group in the training data
+- **Question:** I did not know what minimum segment size to use, so Claude proposed one based on precision.
+- **Reason:** the standard error of an effect is about 15 × √(2 ÷ n), where 15 is the standard deviation of spend ($15.04) and n is the number of customers in each group. With 1,000 per group, the standard error is about $0.67, so the 95% interval spans about ±$1.32, while the average effect is about $0.50. Smaller groups would give estimates that are mostly noise.
+- **Decision: each segment needs at least 1,000 customers in each of the three groups (Mens, Womens, No E-Mail) in the training data,** or about 6,000 customers in total with a 50:50 split.
+- **Merge:** levels 3 to 5 are merged into "$200 or more", which gives seven segments, each with at least 6,448 customers. The merge was chosen from customer counts only.
+
+### A 50:50 train-test split
+- **Question:** I asked why not use 80:20, the usual split in machine learning.
+- **Reason:** 80:20 suits prediction, where the test set only checks accuracy. Here the test set must estimate the email effect among the selected customers. With 20%, about 2,000 test customers would be selected, about 670 per group, for a standard error of about $0.82, too wide to tell the rule from random selection. With 50%, about 5,000 would be selected, about 1,700 per group, for a standard error of about $0.52.
+- **Decision: a 50:50 split, stratified by assigned group, with seed 42.** Stage 04 uses the same split, so the models and the segment rule are compared on the same customers.
+
+### Each segment receives the email with the higher estimate
+- **Problem:** most differences between the emails within a segment are unlikely to be significant.
+- **Decision: each segment receives the email with the higher point estimate in the training data.** Claiming that one email works better needs significant evidence, but choosing an email does not, because a choice has to be made either way and the higher estimate is the better bet.
+- **Check:** on the test set, the rule is compared with sending the Mens email to 10,000 randomly chosen customers, and with random selection of customers and emails. **The rule replaces the Mens email baseline only if the 95% bootstrap confidence interval for the difference in incremental spend per selected customer, rule minus baseline, lies entirely above zero.** I set this threshold; Claude pointed out that "excludes zero" would also be met if the rule were clearly worse. The bootstrap uses 10,000 resamples of the test set with seed 42.
