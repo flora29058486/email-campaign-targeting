@@ -26,6 +26,8 @@ This is a first description of the data. It uses overall figures only: the exper
 
 **Past-year purchases.** 45.0% of customers bought only men's merchandise, 44.9% only women's, and 10.1% (6,448 customers) bought both. **No customer bought neither**, which is consistent with the dataset covering only customers who purchased within the past twelve months.
 
+**Unexplained pattern at $200 (added on November 9, 2026).** **No customer with past-year spend under $200 bought both men's and women's merchandise.** Among the 6,448 who bought both, the lowest past-year spend is $200.13, held by one customer, and 203 customers fall between $200 and $210, about as many as between $210 and $220. Below $200, all 37,224 customers bought only one line. Customer behavior alone would be unlikely to produce such a sharp boundary, so it may reflect how the dataset was built, but **the cause is unknown**. It does not affect the experiment, because the email groups are balanced on both columns. The check is in [`notebooks/03_01_targeting_rule.ipynb`](../notebooks/03_01_targeting_rule.ipynb), where the pattern was found.
+
 ![Two-by-two grid of men's and women's merchandise purchases](figures/mens_womens.png)
 
 ## Behavior after the campaign

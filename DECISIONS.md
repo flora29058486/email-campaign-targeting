@@ -115,3 +115,15 @@ These choices for the stage 03 targeting rule were fixed before any segment-leve
 - **Problem:** most differences between the emails within a segment are unlikely to be significant.
 - **Decision: each segment receives the email with the higher point estimate in the training data.** Claiming that one email works better needs significant evidence, but choosing an email does not, because a choice has to be made either way and the higher estimate is the better bet.
 - **Check:** on the test set, the rule is compared with sending the Mens email to 10,000 randomly chosen customers, and with random selection of customers and emails. **The rule replaces the Mens email baseline only if the 95% bootstrap confidence interval for the difference in incremental spend per selected customer, rule minus baseline, lies entirely above zero.** I set this threshold; Claude pointed out that "excludes zero" would also be met if the rule were clearly worse. The bootstrap uses 10,000 resamples of the test set with seed 42.
+
+## 2026-11-09
+
+These choices were made after the cell-level effects were estimated on the training half, but before any result on the test half was viewed.
+
+### The top 10,000 follow the point-estimate ranking
+- **Question:** I asked whether the worth-sending cells hold 10,000 customers. They hold 17,268, but Claude pointed out that the point-estimate ranking puts an uncertain cell first: "\$200 or more, both" has the largest estimate (+\$2.27), but the lower end of its interval (\$0.002) is just below break-even.
+- **Decision: keep the ranking by point estimate fixed on 2026-11-03.** Switching to worth-sending cells first after seeing which cells qualify would mean choosing the rule that looks best. The category is reported beside each cell, and the test half checks whether the top cell holds up.
+
+### The boundary cell is sampled at random
+- **Context:** whole cells do not add up to exactly 10,000, so only part of the last cell is needed (3,552 of 10,150 for question 3, 10,000 of 10,178 for question 4).
+- **Decision: a random sample within the boundary cell, with seed 42.** The rule treats every customer in a cell the same, so it gives no reason to prefer one over another. Claude proposed this and I agreed.
