@@ -139,3 +139,8 @@ These choices were made before any result on the test half was viewed.
 ### The suppression list is judged the same way as the send list
 - **Context:** the plan set a threshold for the send list (question 3) but not for the suppression list (question 4).
 - **Decision: the suppression list is better than random suppression only if the 95% bootstrap confidence interval for the incremental spend lost per suppressed customer, random suppression minus the list, lies entirely above zero.** Claude proposed mirroring question 3 and I agreed. Random suppression uses the same random 10,000, and the spend lost is measured under the emails the rule would have sent. The bootstrap is the same: 10,000 resamples of the test half with seed 42.
+
+### Earlier analyses were read before stage 04
+- **What happened:** after the stage 03 results, I read summaries of earlier analyses of this dataset, including the 2008 challenge winner's report. They report larger effects for some segments, such as multichannel, high-spend customers.
+- **Decision: neither the stage 03 rule nor the stage 04 plan changes.** Adding channel to the stage 03 cells now would mean revising the rule after seeing others' results. Stage 04 was already planned to use all pre-campaign features, channel included. I recorded this so that any stage 04 result involving channel can be judged knowing what I had read.
+- **Later:** the final report will compare this project's conclusions with those analyses, after checking every cited number against the original sources.
