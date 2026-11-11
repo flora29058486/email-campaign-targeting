@@ -127,3 +127,15 @@ These choices were made after the cell-level effects were estimated on the train
 ### The boundary cell is sampled at random
 - **Context:** whole cells do not add up to exactly 10,000, so only part of the last cell is needed (3,552 of 10,150 for question 3, 10,000 of 10,178 for question 4).
 - **Decision: a random sample within the boundary cell, with seed 42.** The rule treats every customer in a cell the same, so it gives no reason to prefer one over another. Claude proposed this and I agreed.
+
+## 2026-11-11
+
+These choices were made before any result on the test half was viewed.
+
+### The baseline is an actual random sample of 10,000
+- **Question:** Claude asked whether the Mens email baseline should use the Mens email's effect across the whole test half, which is the expected value of a random selection, or an actual random sample of 10,000 customers.
+- **Decision: an actual random sample of 10,000 customers from all 64,000, with seed 42,** evaluated on the customers who fall in the test half. I chose this because it matches the decision as written: a real random list is what a marketing team would otherwise send. It adds some sampling noise, which the bootstrap includes. The random-selection comparison uses the same sample, with each customer given the Mens or Womens email at random (seed 42).
+
+### The suppression list is judged the same way as the send list
+- **Context:** the plan set a threshold for the send list (question 3) but not for the suppression list (question 4).
+- **Decision: the suppression list is better than random suppression only if the 95% bootstrap confidence interval for the incremental spend lost per suppressed customer, random suppression minus the list, lies entirely above zero.** Claude proposed mirroring question 3 and I agreed. Random suppression uses the same random 10,000, and the spend lost is measured under the emails the rule would have sent. The bootstrap is the same: 10,000 resamples of the test half with seed 42.
