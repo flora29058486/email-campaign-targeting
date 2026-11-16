@@ -170,3 +170,7 @@ These choices for the stage 04 uplift models were fixed before any model was fit
 ### scikit-uplift is not used
 - **Context:** the project notes planned to add scikit-uplift for this stage. Claude installed version 0.5.1 to test it: its models ran, but its evaluation functions accept only 0/1 outcomes, and spend is continuous.
 - **Decision: both models are written with scikit-learn and statsmodels,** which are already dependencies, and one evaluation function is used for all three outcomes. I agreed with Claude's recommendation.
+
+### The stage 02 memo is merged into the final decision memo
+- **Context:** the plan called for a one-page memo after the segment effects. By stage 04, the conclusions for a manager had grown to cover stages 01 to 04.
+- **Decision: one decision memo after stage 06, in place of a separate stage 02 memo.** Claude suggested merging them and I agreed, so that a manager reads one recommendation with the profit and sensitivity results.

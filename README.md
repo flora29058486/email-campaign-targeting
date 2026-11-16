@@ -10,6 +10,7 @@ An independent project that uses a public randomized experiment of 64,000 retail
 - **The Mens email outperformed the Womens email** on spend, visits and conversion. Its lead on spend is significant but imprecisely estimated.
 - **None of the six pre-specified segment hypotheses was supported** ([segment effects](reports/02_01_segment_effects.md)). The emails raised spend in almost every segment, and the data cannot show that they worked better in any of them.
 - **A first targeting rule did not beat sending the Mens email to a random 10,000 customers** on held-out data ([targeting rule](reports/03_01_targeting_rule.md)). Its top cell gained $2.27 per customer in training but $1.37 on the test half, a case of regression to the mean.
+- **Uplift models using all seven features did no better** ([uplift models](reports/04_01_uplift_models.md)). The chosen model selected largely the same customers as the first rule and performed within about $0.50 per customer of it.
 
 ## Why this project
 
@@ -50,7 +51,7 @@ The data is not stored in this repository. [`src/download_data.py`](src/download
 | 01 Average effects | Did the emails work overall? | 1, 2 | [Average effects](reports/01_01_average_effects.md) |
 | 02 Segment effects | For whom did the emails work better? | 5, 6, 8 | [Segment effects](reports/02_01_segment_effects.md) |
 | 03 Targeting rule | Whom should we email, and whom should we suppress? | 3, 4 | [Targeting rule](reports/03_01_targeting_rule.md) |
-| 04 Uplift models | Can a model target better than a simple segment rule? | None | Not started |
+| 04 Uplift models | Can a model target better than a simple segment rule? | None | [Uplift models](reports/04_01_uplift_models.md) |
 | 05 Bias demonstration | How wrong would the estimates be without random assignment? | None | Not started |
 | 06 Profit and sensitivity | Is sending worth it under different cost assumptions? | 3, 4 (final) | Not started |
 
@@ -62,8 +63,8 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 | --- | --- | --- |
 | 1 | Which e-mail campaign performed the best, the Mens version, or the Womens version? | [The Mens email](reports/01_01_average_effects.md). Its lead over the Womens email is significant but imprecisely estimated. |
 | 2 | How much incremental sales per customer did the Mens version of the e-mail campaign drive? How much incremental sales per customer did the Womens version of the e-mail campaign drive? | [About $0.77 per customer for the Mens email and $0.42 for the Womens email](reports/01_01_average_effects.md), over two weeks. |
-| 3 | If you could only send an e-mail campaign to the best 10,000 customers, which customers would receive the e-mail campaign? Why? | Provisional: [send the Mens email; the data does not show which 10,000 would respond best](reports/03_01_targeting_rule.md). A rule built from past-year spend and past purchases did not beat a random 10,000 on held-out data. Stages 04 and 06 revisit this. |
-| 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | Provisional: [no list was shown to cost less to suppress than a random 10,000](reports/03_01_targeting_rule.md). Every customer cell cleared the break-even point under the assumed costs, so sending to more customers may pay more than suppressing any. |
+| 3 | If you could only send an e-mail campaign to the best 10,000 customers, which customers would receive the e-mail campaign? Why? | Provisional: [send the Mens email; the data does not show which 10,000 would respond best](reports/03_01_targeting_rule.md). Neither a rule built from past-year spend and past purchases nor [an uplift model using all seven features](reports/04_01_uplift_models.md) beat a random 10,000 on held-out data. Stage 06 finalizes this answer. |
+| 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | Provisional: [no list was shown to cost less to suppress than a random 10,000](reports/03_01_targeting_rule.md). Every customer cell cleared the break-even point under the assumed costs, so sending to more customers may pay more than suppressing any. [An uplift model's suppression list](reports/04_01_uplift_models.md) gave up $0.45 less per customer than random suppression, but this was not significant and would need a new experiment to confirm. |
 | 5 | Did the Mens version of the e-mail campaign perform different than the Womens version of the e-mail campaign, across various customer segments? | Partly: [the two emails showed different patterns](reports/02_01_segment_effects.md). The Mens email raised spend for both men's and women's buyers, while the Womens email's extra visits and purchases were concentrated among women's buyers. This contrast was not tested directly. |
 | 6 | Did the campaigns perform different when measured across different metrics, like Visitors, Conversion, and Total Spend? | [Yes, for the Womens email](reports/02_01_segment_effects.md): it raised visits and conversion more among women's buyers, but the difference in spend was not significant. The visit and conversion results are supporting evidence, because secondary metrics are not corrected for multiple testing. |
 | 7 | Did you observe any anomalies, or odd findings? | Partly answered: [spend stops at exactly $499 for 12 buyers](reports/00_01_eda_summary.md), which may indicate a cap, and [no customer under $200 of past-year spend bought both men's and women's merchandise](reports/00_01_eda_summary.md). The causes are unknown. |
@@ -78,8 +79,8 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 | [Experiment validity checks](reports/00_02_experiment_validity.md) | Nov 4, 2026 | Done |
 | [Analysis plan](analysis_plan.md) | Nov 5, 2026 | Done |
 | [Average effects](reports/01_01_average_effects.md) | Nov 8, 2026 | Done |
-| [Segment effects](reports/02_01_segment_effects.md) and one-page memo | Nov 15, 2026 | Report done, memo not started |
-| Uplift model comparison and bias demonstration | Nov 22, 2026 | Not started |
+| [Segment effects](reports/02_01_segment_effects.md) | Nov 15, 2026 | Done; its memo is merged into the final decision memo |
+| Uplift model comparison and bias demonstration | Nov 22, 2026 | Partly done: [uplift models](reports/04_01_uplift_models.md) |
 | Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [rule v1](reports/03_01_targeting_rule.md) |
 | v1.0 release | Nov 29, 2026 | Not started |
 
