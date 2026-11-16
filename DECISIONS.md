@@ -144,3 +144,29 @@ These choices were made before any result on the test half was viewed.
 - **What happened:** after the stage 03 results, I read summaries of earlier analyses of this dataset, including the 2008 challenge winner's report. They report larger effects for some segments, such as multichannel, high-spend customers.
 - **Decision: neither the stage 03 rule nor the stage 04 plan changes.** Adding channel to the stage 03 cells now would mean revising the rule after seeing others' results. Stage 04 was already planned to use all pre-campaign features, channel included. I recorded this so that any stage 04 result involving channel can be judged knowing what I had read.
 - **Later:** the final report will compare this project's conclusions with those analyses, after checking every cited number against the original sources.
+
+## 2026-11-16
+
+These choices for the stage 04 uplift models were fixed before any model was fitted.
+
+### Each email gets its own estimate
+- **Decision: every customer receives two predictions, the extra spend from the Mens email and from the Womens email, and is assigned the email with the higher one.** This matches the stage 03 rule, so the two can be compared directly.
+
+### Two models, three training targets, judged on spend
+- **Models:**
+  - **Linear interaction model:** an OLS regression of the target on both emails, all features and every email-by-feature interaction. It extends the stage 02 method.
+  - **T-learner:** one gradient boosting model per assigned group (Mens, Womens, No E-Mail). A customer's estimated effect is the Mens or Womens model's prediction minus the No E-Mail model's prediction. Settings are fixed in advance and not tuned: `max_depth=3`, `learning_rate=0.05`, `max_iter=200`, `min_samples_leaf=200`, `random_state=42`.
+- **Features:** `recency`, `history`, `mens`, `womens`, `newbie`, `zip_code` and `channel`, all measured before the campaign. `history_segment` is left out because it repeats `history`.
+- **Training targets:** I wanted to try all three outcomes. Claude pointed out that the plan does not allow secondary metrics to decide the rule. **So each model is trained on `spend`, `visit` or `conversion`, but every combination is judged only by the extra spend of the customers it selects.** Visits are far more common than purchases (about 15% against 0.9%), so a model trained on them may rank customers better even when spend is the goal. This is an addition to the plan, not a change to its primary metric. Effects on visit and conversion are reported descriptively.
+- **Selection:** the six combinations are compared only within the training half, by 5-fold cross-validation stratified by assigned group (seed 42). Each fold scores the incremental spend per customer among the top 15.6% of held-out customers, the same measure used on the test half. **Only the combination with the highest mean score is evaluated on the test half,** so the test half gives one confirmatory result. Claude proposed this so that picking the best of several results on the test half would not inflate it.
+
+### Customers are ranked within the test half
+- **Problem:** a model's predictions for customers it was trained on are more extreme than for new customers. Ranking all 64,000 together, as in stage 03, would let training customers crowd the top of the list and leave fewer test customers to judge it, and the more a model overfits, the fewer there would be.
+- **Decision: the model selects the top 15.6% of the test half (10,000 ÷ 64,000), about 5,000 customers,** and suppresses the bottom 15.6% for question 4. Claude proposed this and I agreed. The count is close to the 5,017 test customers selected by the stage 03 rule.
+
+### The same bar as stage 03
+- **Decision: the model replaces the Mens email baseline only if the 95% bootstrap interval for model minus baseline lies entirely above zero.** The baseline is the test-half part of the same random 10,000 used in stage 03. The suppression list is judged against random suppression in the same way. The difference from the stage 03 rule is reported descriptively. The bootstrap resamples the test half 10,000 times with seed 42.
+
+### scikit-uplift is not used
+- **Context:** the project notes planned to add scikit-uplift for this stage. Claude installed version 0.5.1 to test it: its models ran, but its evaluation functions accept only 0/1 outcomes, and spend is continuous.
+- **Decision: both models are written with scikit-learn and statsmodels,** which are already dependencies, and one evaluation function is used for all three outcomes. I agreed with Claude's recommendation.
