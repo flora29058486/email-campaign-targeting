@@ -187,3 +187,7 @@ These choices for the stage 04 uplift models were fixed before any model was fit
 
 ### Questions 5 and 8 get a direct comparison of the two emails
 I decided to answer the original questions before stage 05. Claude proposed the criteria, and I approved them before the analysis was run. It is exploratory, because some segment results had already been seen. An audience switches from the Mens email only on a significant Womens lead after Holm correction, unlike stage 03, which used the higher point estimate.
+
+### The question 8 audience is corrected, and checks are labeled post hoc
+- **What the comparison showed:** the Womens email is worth sending only for customers who bought only women's merchandise. The published recommendation, all customers who bought women's merchandise, also included buyers of both lines, for whom it is uncertain. **I approved correcting it.**
+- **Checks after the results:** I asked why a p-value of 0.037 was not significant and which results the $0.02 break-even applies to. Claude added corrected intervals and tested how fragile the one significant lead is. **These checks are labeled as added after the results and change no verdict or criterion.**
