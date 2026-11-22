@@ -6,7 +6,7 @@ Stage 03 built a targeting rule from two customer features, past-year spend and 
 
 ## Approach
 
-Every choice below was **fixed before any model was fitted, but after the stage 03 results on the same test half had been seen** (see Limitations). The reasons are summarized here; the dated discussion is in [`DECISIONS.md`](../DECISIONS.md) (2026-11-16), and the code is in [`notebooks/04_01_uplift_models.ipynb`](../notebooks/04_01_uplift_models.ipynb).
+Choices 1 to 7 below were **fixed before any model was fitted, but after the stage 03 results on the same test half had been seen** (see Limitations). The reasons are summarized here; the dated discussion is in [`DECISIONS.md`](../DECISIONS.md) (2026-11-16), and the code is in [`notebooks/04_01_uplift_models.ipynb`](../notebooks/04_01_uplift_models.ipynb).
 
 1. **Same customers as stage 03:** the same 50:50 split, the same random 10,000 baseline and the same measure, rebuilt by [`src/prepare.py`](../src/prepare.py). A check confirms that the stage 03 numbers are reproduced exactly.
 2. **Two estimates per customer:** each model estimates the extra outcome from the Mens email and from the Womens email, and each customer is assigned the email with the higher estimate, as in stage 03.
@@ -17,14 +17,17 @@ Every choice below was **fixed before any model was fitted, but after the stage 
 5. **One test, not six:** the six combinations are compared only within the training half, by 5-fold cross-validation. Only the highest-scoring one is evaluated on the test half. Testing all six there and reporting the best would inflate the result, as the top cell did in stage 03.
 6. **Ranking within the test half:** a model's predictions for customers it was trained on are more extreme than for new customers. Ranking all 64,000 together would let training customers crowd the top of the list. **The model therefore selects the top 15.6% of the test half** (10,000 ÷ 64,000), about 5,000 customers, and suppresses the bottom 15.6% for question 4.
 7. **Same threshold as stage 03:** the model replaces the Mens email baseline only if the 95% bootstrap interval for model minus baseline lies entirely above zero. The suppression list is judged the same way against random suppression. The bootstrap resamples the test half 10,000 times with seed 42.
+8. **Robustness check (added on November 22, 2026, after the results):** as in [stage 03](03_01_targeting_rule.md), random selection is also measured by the average across the whole test half. **This does not replace the threshold.**
 
 ## Answer
 
-**Not shown. The model did not pass the threshold against sending the Mens email to random customers, so the simple choice is kept.** Its selected customers gained $1.12 each on the test half, against $1.01 for the baseline. **The difference, $0.11, has a 95% interval from -$1.15 to $1.32.** This comparison is limited by sample size: the test half could reliably detect only a difference of about $1.76 per customer.
+**Not shown. Neither of the model's lists passed the threshold against random selection, so the simple choice is kept.**
+
+**To choose whom to email (question 3), the model was not shown to beat random selection.** Its selected customers gained $1.12 each on the test half, against $1.01 for the baseline. **The difference, $0.11, has a 95% interval from -$1.15 to $1.32.** This comparison is limited by sample size: the test half could reliably detect only a difference of about $1.76 per customer.
 
 **The model and the stage 03 rule have almost the same estimate, but they are not shown to be equivalent.** The two gained $1.12 and $1.13. The lists share most of their customers, so this comparison is more precise than the one with the baseline, but it is still limited by sample size. **The interval for their difference, -$0.53 to $0.52, still allows a difference of about $0.50 in either direction, roughly two-thirds of the Mens email's average effect.** Using all seven features, the model's top 15.6% included every test customer who had bought both men's and women's merchandise, the cell the stage 03 rule had already ranked first.
 
-**The model's suppression list is the one result that points to a gain, but it is not confirmed.** Suppressing the model's bottom 15.6% gives up $0.64 per customer, against $1.09 for random suppression. The difference, $0.45, has an interval from -$0.91 to $1.90, and the test half could reliably detect only a difference of about $2.00. If a campaign ever has to leave customers out, this list would be worth testing in a new experiment (see below).
+**To choose whom to suppress (question 4), the model was not shown to beat random selection either.** Suppressing its bottom 15.6% gave up $0.64 per customer, against $1.09 for random suppression. The difference, $0.45, has an interval from -$0.91 to $1.90, and the test half could reliably detect only a difference of about $2.00. **The gap also disappears when random selection is measured by the test-half average** ([see below](#does-the-result-depend-on-the-random-draw)).
 
 ## Results on the test half
 
@@ -45,13 +48,27 @@ The interval for model minus stage 03 rule is much narrower than the others, bec
 
 The figure shows each list's own interval. Judgments rest on the intervals for differences in the table above, which can be much narrower when two lists overlap.
 
-| Comparison | Standard error | Smallest difference reliably detectable | Customers needed to detect the observed difference |
-| --- | ---: | ---: | ---: |
-| Model minus baseline | $0.63 | $1.76 | about 240 times as many |
-| Model minus stage 03 rule | $0.27 | $0.75 | not meaningful (observed -$0.01) |
-| Random minus model's suppression | $0.72 | $2.00 | about 20 times as many |
+| Comparison | Standard error | Smallest difference reliably detectable |
+| --- | ---: | ---: |
+| Model minus baseline | $0.63 | $1.76 |
+| Model minus stage 03 rule | $0.27 | $0.75 |
+| Random minus model's suppression | $0.72 | $2.00 |
 
 The smallest reliably detectable difference is 2.8 times the bootstrap standard error: a true difference that large would give an interval above zero about 80% of the time.
+
+## Does the result depend on the random draw?
+
+**The size of each gap does; the decision does not.** This is the same check as in stage 03.
+
+| How random selection is measured | Question 3: model's gain over random | Question 4: model's saving over random |
+| --- | --- | --- |
+| **One random draw (threshold)** | **+$0.11 (-$1.15 to $1.32)** | **+$0.45 (-$0.91 to $1.90)** |
+| Test-half average (check) | +$0.51 (-$0.36 to $1.44) | -$0.01 (-$0.93 to $0.94) |
+| Test-half average, Mens email for everyone (check) | As above | -$0.30 (-$1.34 to $0.70) |
+
+Question 4's first two rows use the emails the model would send. The last row suppresses from the recommended campaign, the Mens email for everyone.
+
+**Against the average, the send list looks better and the suppression list shows no saving.** Half of 5,000 random lists of the same size gave up no more than the model's suppression list. **Every interval in the table includes zero, so neither list is shown to be better under either measure.**
 
 ## How the model was chosen
 
@@ -95,14 +112,14 @@ Scores are the incremental spend per selected customer within each held-out fold
 | Suppressed by the model | 7.8 | 0.6 |
 | Suppressed at random | 9.4 | 0.6 |
 
-**These point the same way as spend but are descriptive only.** The model was trained on visits, so a higher visit gain among its selected customers is expected and is not evidence that it targets spend better.
+**These are descriptive only.** The lists to email gained more visits than the baseline. The model was trained on visits, so this is expected for its list and is not evidence that it targets spend better. The model's suppression list gave up fewer visits than the random draw, but slightly more than the test-half average (7.8 against 7.5 points), so **visits show no saving from suppressing it either.**
 
 ## What this means
 
-- **For questions 3 and 4:** neither a two-feature rule nor a seven-feature model was shown to select better customers than a random list. The recommendation from stage 03 stands: send the Mens email as widely as the budget allows. **This rests on its average effect across all customers** ($0.77, 95% CI $0.49 to $1.05, against a $0.02 break-even), not on evidence that it pays in every cell.
+- **For questions 3 and 4: choose at random.** Neither a two-feature rule nor a seven-feature model was shown to select better customers, to email or to suppress, than random selection. Send the Mens email as widely as the budget allows, and when the number is limited, draw the customers at random. **The case for sending rests on the average effect across all customers** ($0.77, 95% CI $0.49 to $1.05, against a $0.02 break-even), not on evidence that it pays in every cell.
 - **For the business:** building and maintaining a targeting model would add cost without a demonstrated gain on this data.
 - **For stage 06:** the profit and sensitivity analysis uses the Mens email sent broadly as the main case.
-- **For a follow-up experiment:** the suppression list could be tested by randomizing email within two lists, the model's bottom 15.6% and a random 15.6%: half of each list receives the email and half does not. The difference between the two lists' email effects is the spend the model's list saves. **Detecting $0.45 per customer would need about 71,000 customers in each list, or a customer base of about 450,000,** roughly seven times this dataset. This is an approximation based on the overall standard deviation of spend.
+- **For a new experiment:** size it from the smallest gain that would matter to the business, not from the gaps observed here. The first version of this report sized one at about 71,000 customers per list from the $0.45 saving. **That figure should not be used, because the saving depends on the random draw.**
 
 ## Limitations
 
@@ -110,5 +127,5 @@ Scores are the incremental spend per selected customer within each held-out fold
 - **The test half is small for comparisons with the baseline.** About 5,000 customers fall in each list, and only about a third of them received no email. A real gain smaller than about $1.76 per customer would likely go undetected. The comparison with the stage 03 rule is more precise, but it too could reliably detect only a difference of about $0.75.
 - **The test half was not untouched.** Its stage 03 results, including the effect in each cell, had been seen before this stage was designed, and they may have influenced the design. No stage 04 model was trained or selected on the test half, but **its result is not a fully independent confirmation**. That would need new data.
 - **The choice among the six combinations is uncertain.** Their cross-validation scores overlap heavily, so a different split could have chosen a different winner.
-- **The suppression result is a lead, not a finding.** Confirming it would need a new experiment that suppresses the model's list for some customers and a random list for others.
-- **The baseline is one random draw, outcomes cover two weeks, and the data is from 2008,** as in stage 03.
+- **The threshold uses one random draw.** The check against the test-half average was added after the results, so it describes robustness and is not a second chance to pass.
+- **Outcomes cover two weeks, and the data is from 2008,** as in stage 03.
