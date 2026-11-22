@@ -93,7 +93,7 @@ These are the original questions from the challenge, quoted verbatim. Answers wi
 
 ## How this project was built
 
-I designed the analysis and made the final call on each methodological decision. I used Claude to write most of the code and the first drafts of the reports, and to help with statistical wording. I reviewed every result and report. [`DECISIONS.md`](DECISIONS.md) records who raised each point, and every commit that Claude helped with is marked as co-authored.
+I designed the analysis and made the final call on each methodological decision. I used Claude to write most of the code and the first drafts of the reports, and to help with statistical wording. I check results in conversation with Claude as the project progresses. [`DECISIONS.md`](DECISIONS.md) records who raised each point, and every commit that Claude helped with is marked as co-authored.
 
 ## Repository structure
 

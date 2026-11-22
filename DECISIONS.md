@@ -2,7 +2,7 @@
 
 A dated record of the analytical decisions in this project, including ideas I dropped and mistakes I corrected.
 
-> This log was compiled on November 3, 2026 from my working conversations with Claude, an AI assistant that wrote most of the code and report drafts. Each entry records what was actually discussed, who raised the point, and what I decided. I reviewed every entry.
+> This log was compiled on November 3, 2026 from my working conversations with Claude, an AI assistant that wrote most of the code and report drafts. Each entry records what was actually discussed, who raised the point, and what I decided.
 
 ## 2026-11-01
 
@@ -184,3 +184,6 @@ These choices for the stage 04 uplift models were fixed before any model was fit
 - **"Not shown to be better" was worded as "equal" or "no better".** The stage 03 report said that sending broadly "works as well as" the rule, and similar wording appeared in stage 04 and the README. **These statements now say that no tested rule or model was shown to be better.**
 - **A finding was attributed to stage 03 that it did not make.** The stage 04 notebook said stage 03 found that customers who bought both lines respond strongly to email. **The sentence is removed:** that cell was uncertain in both halves.
 - **The stage 04 test was described as confirmatory without a caveat.** The entry of 2026-11-16 called it "one confirmatory result", but the stage 03 results on the same test half had been seen before stage 04 was designed. **It is not a fully independent confirmation.** The earlier entry is left as written, and this entry corrects it.
+
+### Questions 5 and 8 get a direct comparison of the two emails
+I decided to answer the original questions before stage 05. Claude proposed the criteria, and I approved them before the analysis was run. It is exploratory, because some segment results had already been seen. An audience switches from the Mens email only on a significant Womens lead after Holm correction, unlike stage 03, which used the higher point estimate.
