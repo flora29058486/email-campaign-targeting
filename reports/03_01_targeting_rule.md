@@ -25,13 +25,13 @@ Every choice below was **fixed before the rule was evaluated on held-out data**.
 
 ## Answers
 
-**The emails pay off, and sending the Mens email broadly works as well as any segment rule tested.** The rule did not pass its threshold for either question, so the recommendation falls back to the baseline.
+**The Mens email pays off on average, and the segment rule was not shown to target better than sending it at random.** The rule did not pass its threshold for either question, so the recommendation falls back to the baseline.
 
 **Question 3: send the Mens email. The data does not show which 10,000 customers would respond best.** The rule selected all 6,448 customers with $200 or more of past-year spend who bought both lines, plus 3,552 of those with $200 or more who bought only women's merchandise. On the test half, they gained $1.13 each, against $1.01 for a random 10,000 sent the Mens email. **The difference, $0.12, has a 95% interval from -$1.25 to $1.43, so the rule is not shown to be better.** It is not shown to be worse either: the test half is too small to separate differences this small.
 
 **Question 4: no list of 10,000 was shown to cost less to suppress than a random 10,000.** The rule's list was 10,000 of the 10,178 customers with $200 or more of past-year spend who bought only men's merchandise, where the Mens email's training estimate was lowest ($0.11). On the test half, suppressing them gave up $0.57 per customer, against $1.13 for random suppression, but **the interval for the difference runs from -$1.03 to $2.27**. If customers must be suppressed, random suppression is as well supported as any list tested.
 
-**Sending to more customers may pay more than suppressing any.** Every cell's test estimate is above the $0.02 per customer needed to cover an email, at the assumed 40% margin and $0.008 per email. These costs are assumptions, and stage 06 tests other values.
+**The case for sending broadly rests on the average effect, not on each cell.** Across all customers, the Mens email added $0.77 per customer (95% CI $0.49 to $1.05, [stage 01](01_01_average_effects.md)), which is above the $0.02 needed to cover an email at the assumed 40% margin and $0.008 per email. Suppressing customers at random would therefore give up profit on average. **This does not show that every cell is worth emailing: on the test half, one of the seven cells is worth sending and six are uncertain.** All seven point estimates are above $0.02, but six of the intervals include it. The costs are assumptions, and stage 06 tests other values.
 
 ## Results on the test half
 
@@ -50,15 +50,17 @@ The baseline's $1.01 is above the Mens email's overall effect of $0.77 in [stage
 
 ## Why the rule did not hold up
 
-| Training rank | Cell | Email | Training effect | Test effect (95% CI) |
-| ---: | --- | --- | ---: | --- |
-| 1 | $200 or more, both | Mens | +$2.27 | +$1.37 (-$0.03 to $2.78) |
-| 2 | $200 or more, women's only | Mens | +$1.56 | +$0.67 (-$0.06 to $1.41) |
-| 3 | $100-$200, men's only | Mens | +$1.47 | +$0.05 (-$0.76 to $0.86) |
-| 4 | Under $100, men's only | Mens | +$0.84 | +$1.01 ($0.18 to $1.84) |
-| 5 | Under $100, women's only | Womens | +$0.70 | +$0.89 (-$0.09 to $1.86) |
-| 6 | $100-$200, women's only | Mens | +$0.42 | +$0.89 (-$0.04 to $1.83) |
-| 7 | $200 or more, men's only | Mens | +$0.11 | +$0.57 (-$0.81 to $1.94) |
+| Training rank | Cell | Email | Training effect | Test effect (95% CI) | Test category |
+| ---: | --- | --- | ---: | --- | --- |
+| 1 | $200 or more, both | Mens | +$2.27 | +$1.37 (-$0.03 to $2.78) | Uncertain |
+| 2 | $200 or more, women's only | Mens | +$1.56 | +$0.67 (-$0.06 to $1.41) | Uncertain |
+| 3 | $100-$200, men's only | Mens | +$1.47 | +$0.05 (-$0.76 to $0.86) | Uncertain |
+| 4 | Under $100, men's only | Mens | +$0.84 | +$1.01 ($0.18 to $1.84) | Worth sending |
+| 5 | Under $100, women's only | Womens | +$0.70 | +$0.89 (-$0.09 to $1.86) | Uncertain |
+| 6 | $100-$200, women's only | Mens | +$0.42 | +$0.89 (-$0.04 to $1.83) | Uncertain |
+| 7 | $200 or more, men's only | Mens | +$0.11 | +$0.57 (-$0.81 to $1.94) | Uncertain |
+
+Categories follow [`DECISIONS.md`](../DECISIONS.md) (2026-11-06): worth sending if the lower end of the interval is above the $0.02 break-even, uncertain if the estimate is above it but the interval includes it.
 
 ![Training and test estimates for each cell, showing the top three falling and the other four rising on the test half](figures/targeting_train_vs_test.png)
 
@@ -69,7 +71,7 @@ The baseline's $1.01 is above the Mens email's overall effect of $0.77 in [stage
 ## What this means for later stages
 
 - **Stage 04:** the uplift models can use every pre-campaign feature, but they face the same bar. They must beat the Mens email sent to a random 10,000 on this test half.
-- **Stage 06:** the finding that every cell clears break-even depends on the assumed margin and cost per email, so it is tested across other values.
+- **Stage 06:** whether the average effect, and each cell's effect, clears break-even depends on the assumed margin and cost per email, so both are tested across other values.
 
 ## Limitations
 

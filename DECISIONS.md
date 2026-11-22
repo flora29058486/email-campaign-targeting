@@ -174,3 +174,13 @@ These choices for the stage 04 uplift models were fixed before any model was fit
 ### The stage 02 memo is merged into the final decision memo
 - **Context:** the plan called for a one-page memo after the segment effects. By stage 04, the conclusions for a manager had grown to cover stages 01 to 04.
 - **Decision: one decision memo after stage 06, in place of a separate stage 02 memo.** Claude suggested merging them and I agreed, so that a manager reads one recommendation with the profit and sensitivity results.
+
+## 2026-11-22
+
+### Five corrections to stages 03 and 04
+- **What happened:** I approved the stage 03 and 04 commits without first reviewing the standards Claude had applied. When Claude re-checked them before stage 05, it found that it had judged break-even by point estimates alone, along with four other errors in text it had drafted. I asked for all five to be corrected. No estimate, interval or list changed.
+- **Break-even was overstated.** The reports, the notebook and the README presented every cell as clearing break-even, based on point estimates alone. **Under the rule of 2026-11-06, one of the seven test cells is worth sending and six are uncertain.** The case for sending broadly now rests on the Mens email's average effect, and the stage 03 notebook computes each test category.
+- **The role of sample size was misstated.** Stage 04 said that the similarity between the model and the stage 03 rule did not depend on sample size. I had suggested this framing, and Claude agreed and wrote it. **It was wrong: the interval still allows a difference of about $0.50 per customer, and the smallest reliably detectable difference is about $0.75.**
+- **"Not shown to be better" was worded as "equal" or "no better".** The stage 03 report said that sending broadly "works as well as" the rule, and similar wording appeared in stage 04 and the README. **These statements now say that no tested rule or model was shown to be better.**
+- **A finding was attributed to stage 03 that it did not make.** The stage 04 notebook said stage 03 found that customers who bought both lines respond strongly to email. **The sentence is removed:** that cell was uncertain in both halves.
+- **The stage 04 test was described as confirmatory without a caveat.** The entry of 2026-11-16 called it "one confirmatory result", but the stage 03 results on the same test half had been seen before stage 04 was designed. **It is not a fully independent confirmation.** The earlier entry is left as written, and this entry corrects it.
