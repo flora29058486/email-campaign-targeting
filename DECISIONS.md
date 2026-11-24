@@ -61,12 +61,11 @@ I drafted five hypotheses, with AI help on the statistical wording. Review chang
 
 ### Regression adjustment as a supplementary check
 - **Reading:** Facure chapters 4 to 6, on regression.
-- **Question:** I asked whether features should be added one at a time. **Decision: one model with all pre-treatment features, fixed before running.** Trying combinations would allow picking the best-looking result. `history` is used instead of `history_segment`, and `visit` and `conversion` are excluded because the email may affect them.
+- **Decision: one model with all pre-treatment features, fixed before running.** Adding features one at a time or trying combinations would allow picking the best-looking result. `history` is used instead of `history_segment`, and `visit` and `conversion` are excluded because the email may affect them.
 - **Result:** estimates moved by less than $0.01 and confidence intervals narrowed by less than 0.2%. The Welch estimates remain the main results, and this check is labeled as outside the plan.
 
 ### Feature coefficients are not interpreted
-- **Question:** I asked whether features without significant coefficients, such as `channel` and `zip_code`, could be dropped.
-- **Decision: no.** Only the emails were randomized, so feature coefficients show association, not cause. A feature can be unrelated to how much customers spend and still change how well the email works. H3 and H5 stay in the plan as written.
+- **Decision: features are not dropped for lacking significant coefficients,** such as `channel` and `zip_code`. Only the emails were randomized, so feature coefficients show association, not cause. A feature can be unrelated to how much customers spend and still change how well the email works. H3 and H5 stay in the plan as written.
 
 ### H4 keeps the linear trend
 - **Question:** after seeing the effect within each level, I asked whether to test each level as its own group instead of a straight line, because level 3 fell well below the line.
@@ -101,14 +100,13 @@ These choices for the stage 03 targeting rule were fixed before any segment-leve
 - **Note:** customers who bought both lines appear only at level 3 ($200) and above.
 
 ### At least 1,000 customers per group in the training data
-- **Question:** I did not know what minimum segment size to use, so Claude proposed one based on precision.
+- **Proposal:** Claude proposed a minimum based on precision.
 - **Reason:** the standard error of an effect is about 15 × √(2 ÷ n), where 15 is the standard deviation of spend ($15.04) and n is the number of customers in each group. With 1,000 per group, the standard error is about $0.67, so the 95% interval spans about ±$1.32, while the average effect is about $0.50. Smaller groups would give estimates that are mostly noise.
 - **Decision: each segment needs at least 1,000 customers in each of the three groups (Mens, Womens, No E-Mail) in the training data,** or about 6,000 customers in total with a 50:50 split.
 - **Merge:** levels 3 to 5 are merged into "$200 or more", which gives seven segments, each with at least 6,448 customers. The merge was chosen from customer counts only.
 
 ### A 50:50 train-test split
-- **Question:** I asked why not use 80:20, the usual split in machine learning.
-- **Reason:** 80:20 suits prediction, where the test set only checks accuracy. Here the test set must estimate the email effect among the selected customers. With 20%, about 2,000 test customers would be selected, about 670 per group, for a standard error of about $0.82, too wide to tell the rule from random selection. With 50%, about 5,000 would be selected, about 1,700 per group, for a standard error of about $0.52.
+- **Reason:** the usual 80:20 split suits prediction, where the test set only checks accuracy. Here the test set must estimate the email effect among the selected customers. With 20%, about 2,000 test customers would be selected, about 670 per group, for a standard error of about $0.82, too wide to tell the rule from random selection. With 50%, about 5,000 would be selected, about 1,700 per group, for a standard error of about $0.52.
 - **Decision: a 50:50 split, stratified by assigned group, with seed 42.** Stage 04 uses the same split, so the models and the segment rule are compared on the same customers.
 
 ### Each segment receives the email with the higher estimate
@@ -190,11 +188,30 @@ I decided to answer the original questions before stage 05. Claude proposed the 
 
 ### The question 8 audience is corrected, and checks are labeled post hoc
 - **What the comparison showed:** the Womens email is worth sending only for customers who bought only women's merchandise. The published recommendation, all customers who bought women's merchandise, also included buyers of both lines, for whom it is uncertain. **I approved correcting it.**
-- **Checks after the results:** I asked why a p-value of 0.037 was not significant and which results the $0.02 break-even applies to. Claude added corrected intervals and tested how fragile the one significant lead is. **These checks are labeled as added after the results and change no verdict or criterion.**
+- **Checks after the results:** Claude added corrected intervals and tested how fragile the one significant lead is. **These checks are labeled as added after the results and change no verdict or criterion.**
 
 ### The random draw is checked, and questions 3 and 4 get direct answers
-- **Question:** I asked what was missing from the answers to questions 3 and 4, and recalled that the suppression lists had looked fairly good.
+- **What started it:** I noted that the suppression lists had looked fairly good.
 - **What Claude found:** they looked good mainly because the one random draw responded more than average. Against the test-half average, the rule's saving falls from \$0.56 to \$0.22 and the model's from \$0.45 to -\$0.01, while both lists to email look better (+\$0.51). Claude had presented the model's suppression list as a lead and sized a follow-up experiment from it without checking this. **That was a mistake, and the reports no longer do so.**
 - **The threshold does not change.** On 2026-11-11, Claude recommended the test-half average and I chose an actual draw. Switching now would mean choosing the baseline after seeing the results. **The average is reported as a robustness check, labeled as added afterwards. Under neither measure does any interval lie above zero.** The entry of 2026-11-11 said that the bootstrap includes the noise of the draw; it covers resampling of the test half, not other draws.
 - **Decision: the answers state an action.** Send the Mens email to a random 10,000 for question 3; for question 4, avoid suppressing, or suppress at random if it is required. This applies the rule fixed before testing.
 - **Presentation:** I asked for one consistent account from start to end. The stage 03 and 04 reports now give the answer, then the threshold result, then the check, and the stage 02 report leads questions 5 and 8 with the direct comparison. **Earlier entries in this log are left as written.**
+
+## 2026-11-24
+
+### Stage 06 is a threshold analysis of estimates already reported
+These choices were fixed before the stage 06 notebook was run.
+
+- **Reason:** margin and cost affect the decision only through break-even, cost per email ÷ margin. The plan's 16 combinations are therefore 15 different thresholds on one scale, from \$0.002 to \$0.333, and a separate table for each would repeat the same comparison. The revenue-first scenario accepts a loss of up to 5% of incremental spend, so its break-even is cost ÷ (margin + 0.05), the same as a margin 5 points higher.
+- **Decision: stage 06 reclassifies existing estimates at each break-even, without estimating anything new.** Claude proposed this design and I agreed:
+  - **Estimates:** the Mens and Womens emails against no email, for all customers (stage 01, Welch) and for the three past-purchase audiences (stage 02, HC3), eight in all, on all 64,000 customers.
+  - **Classification:** the rule of 2026-11-06 at each break-even. An estimate is worth sending while break-even is below the lower end of its 95% interval, uncertain while break-even lies between that and the estimate, and not worth sending above the estimate.
+  - **Answers:** the base case (40% margin, \$0.008 per email, break-even \$0.02) gives the answer. The other combinations are reported as the number in which each category holds. **An estimate that becomes uncertain is reported as uncertain; no new rule decides what to do with it.**
+  - **Questions 3 and 4:** the profit from emailing a random 10,000 customers, which is also what suppressing them gives up: 10,000 × (margin × Mens effect − cost), with its 95% interval, at the base case and as a range across the 16 combinations.
+  - **Maximum cost per email:** for each margin, the highest cost at which the Mens email is still worth sending, margin × the lower end of its interval.
+  - **Revenue-first:** reported in one sentence with its break-even values, separately from the main rule as the plan requires.
+  - **Which email to send is unaffected:** both emails cost the same, so costs cancel and the margin only scales the difference between them.
+- **Limitation, stated before running:** every input has already been reported, so most results follow from known numbers by arithmetic. Fixing the rule first prevents choosing the wording after seeing the table, but this stage cannot be blind.
+
+### Clarifying questions are removed from this log
+- **Decision:** this log records decisions, their reasons and who proposed them. I removed my clarifying questions from six earlier entries. **No decision, reason or attribution of a proposal changed.**
