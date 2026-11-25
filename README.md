@@ -2,7 +2,7 @@
 
 An independent project that uses a public randomized experiment of 64,000 retail customers to answer two decision questions: **who should receive a marketing email, and is sending it worth the cost?**
 
-> **Status: in progress (started November 2026).** All eight challenge questions have answers linked below; 3, 4 and 8 are provisional until stage 06. The final targeting rule will appear at the top of this page when v1.0 is released.
+> **Status: in progress (started November 2026).** All eight challenge questions are answered below. The final targeting rule will appear at the top of this page when v1.0 is released.
 
 ## Results so far
 
@@ -10,8 +10,9 @@ An independent project that uses a public randomized experiment of 64,000 retail
 - **The Mens email outperformed the Womens email** on spend, visits and conversion. Its lead on spend is significant but imprecisely estimated.
 - **None of the six pre-specified segment hypotheses was supported** ([segment effects](reports/02_01_segment_effects.md)). The emails raised spend in almost every segment, and the data cannot show that they worked better in any of them.
 - **The Mens email is worth sending to all three past-purchase audiences** ([direct comparison](reports/02_02_email_by_segment.md), exploratory). The Womens email is worth sending only to customers who bought only women's merchandise, where neither email was shown better.
-- **If only 10,000 customers can be emailed, send the Mens email to 10,000 drawn at random. If 10,000 must be left out, choose them at random too** (provisional until stage 06). Neither a [two-feature rule](reports/03_01_targeting_rule.md) nor an [uplift model using all seven features](reports/04_01_uplift_models.md) was shown to beat random selection on held-out data.
+- **If only 10,000 customers can be emailed, send the Mens email to 10,000 drawn at random. If 10,000 must be left out, choose them at random too.** Neither a [two-feature rule](reports/03_01_targeting_rule.md) nor an [uplift model using all seven features](reports/04_01_uplift_models.md) was shown to beat random selection on held-out data.
 - **This data could not show which customers respond more to the email.** The rule's top cell gained $2.27 per customer in training but $1.37 on the test half, a case of regression to the mean. How good each list looks also depends on how random selection is measured, but none is shown to be better either way.
+- **These answers hold under every margin and cost tested** ([profit and sensitivity](reports/06_01_profit_sensitivity.md)). Emailing a random 10,000 customers earns about $3,000 over two weeks at the base case, and the Mens email stays worth sending while each email costs less than about $0.15 to $0.29, depending on the margin.
 
 ## Why this project
 
@@ -54,7 +55,7 @@ The data is not stored in this repository. [`src/download_data.py`](src/download
 | 03 Targeting rule | Whom should we email, and whom should we suppress? | 3, 4 | [Targeting rule](reports/03_01_targeting_rule.md) |
 | 04 Uplift models | Can a model target better than a simple rule or random selection? | 3, 4 (supporting) | [Uplift models](reports/04_01_uplift_models.md) |
 | 05 Bias demonstration | How wrong would the estimates be without random assignment? | None | Not started |
-| 06 Profit and sensitivity | Is sending worth it under different cost assumptions? | 3, 4, 8 (final) | Not started |
+| 06 Profit and sensitivity | Is sending worth it under different cost assumptions? | 3, 4, 8 (final) | [Profit and sensitivity](reports/06_01_profit_sensitivity.md) |
 
 ## Challenge questions
 
@@ -64,12 +65,12 @@ These are the original questions from the challenge, quoted verbatim. Each answe
 | --- | --- | --- |
 | 1 | Which e-mail campaign performed the best, the Mens version, or the Womens version? | [The Mens email](reports/01_01_average_effects.md). Its lead over the Womens email is significant but imprecisely estimated. |
 | 2 | How much incremental sales per customer did the Mens version of the e-mail campaign drive? How much incremental sales per customer did the Womens version of the e-mail campaign drive? | [About $0.77 per customer for the Mens email and $0.42 for the Womens email](reports/01_01_average_effects.md), over two weeks. |
-| 3 | If you could only send an e-mail campaign to the best 10,000 customers, which customers would receive the e-mail campaign? Why? | Provisional until stage 06: [send the Mens email to 10,000 customers drawn at random from all 64,000](reports/03_01_targeting_rule.md). The Mens email did best on average (+$0.77 per customer, 95% CI $0.49 to $1.05). Customers are drawn at random because no list passed the threshold set before testing: on held-out data, the segment rule beat a random 10,000 by $0.12 per customer (-$1.25 to $1.43) and [the uplift model](reports/04_01_uplift_models.md) by $0.11 (-$1.15 to $1.32). In a check added later, against the test-half average, both gaps rise to $0.51, and both intervals still include zero. This does not mean that all customers respond equally, only that this data could not identify the best 10,000. |
-| 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | Provisional until stage 06: [avoid suppressing if possible; if 10,000 customers must be suppressed, choose them at random](reports/03_01_targeting_rule.md). No list passed the same threshold: compared with a random 10,000, the segment rule's list gave up $0.56 less per customer (-$1.03 to $2.27) and [the uplift model's](reports/04_01_uplift_models.md) $0.45 less (-$0.91 to $1.90). A later check showed that most of these gaps came from that one random draw: against the test-half average, they are $0.22 and -$0.01, and both intervals still include zero. Suppressing a random 10,000 from the Mens email would give up about $7,700 in sales and $3,000 in profit (95% CI $1,900 to $4,100) over two weeks, at a 40% margin and $0.008 per email. This rests on the average effect: on the test half, six of seven customer cells are uncertain. |
+| 3 | If you could only send an e-mail campaign to the best 10,000 customers, which customers would receive the e-mail campaign? Why? | [Send the Mens email to 10,000 customers drawn at random from all 64,000](reports/03_01_targeting_rule.md). The Mens email did best on average (+$0.77 per customer, 95% CI $0.49 to $1.05). Customers are drawn at random because no list passed the threshold set before testing: on held-out data, the segment rule beat a random 10,000 by $0.12 per customer (-$1.25 to $1.43) and [the uplift model](reports/04_01_uplift_models.md) by $0.11 (-$1.15 to $1.32). In a check added later, against the test-half average, both gaps rise to $0.51, and both intervals still include zero. This does not mean that all customers respond equally, only that this data could not identify the best 10,000. Under every margin and cost tested in [stage 06](reports/06_01_profit_sensitivity.md), this earns a profit: about $3,000 at the base case. |
+| 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | [Avoid suppressing if possible; if 10,000 customers must be suppressed, choose them at random](reports/03_01_targeting_rule.md). No list passed the same threshold: compared with a random 10,000, the segment rule's list gave up $0.56 less per customer (-$1.03 to $2.27) and [the uplift model's](reports/04_01_uplift_models.md) $0.45 less (-$0.91 to $1.90). A later check showed that most of these gaps came from that one random draw: against the test-half average, they are $0.22 and -$0.01, and both intervals still include zero. Suppressing a random 10,000 from the Mens email would give up about $7,700 in sales and $3,000 in profit (95% CI $1,900 to $4,100) over two weeks, at a 40% margin and $0.008 per email, and an estimated $1,300 or more under every margin and cost tested in [stage 06](reports/06_01_profit_sensitivity.md). This rests on the average effect: on the test half, six of seven customer cells are uncertain. |
 | 5 | Did the Mens version of the e-mail campaign perform different than the Womens version of the e-mail campaign, across various customer segments? | [Not shown for spend](reports/02_02_email_by_segment.md): the Mens email's lead did not differ significantly across any of six segment splits after correction (exploratory). Visits differed by past purchases, but that is descriptive only. |
 | 6 | Did the campaigns perform different when measured across different metrics, like Visitors, Conversion, and Total Spend? | [The Mens email leads on all three](reports/01_01_average_effects.md): by $0.35 per customer in spend, 3.14 percentage points in visits and 0.37 points in conversion. By segment the metrics differ: [visits vary with past purchases, while no difference was shown for spend](reports/02_02_email_by_segment.md). Visits and conversion are supporting evidence, because they are not corrected for multiple testing. |
 | 7 | Did you observe any anomalies, or odd findings? | [Yes, three](reports/00_01_eda_summary.md): spend stops at exactly $499 for 12 buyers, which may indicate a cap; no customer under $200 of past-year spend bought both men's and women's merchandise; and 6,562 rows exactly repeat an earlier row. The causes of the first two are unknown. The repeated rows are kept, because without a customer ID they cannot be told apart from different customers with the same values. |
-| 8 | Which audience would you target the Mens version to, and the Womens version to, given the results of the test? What data do you have to support your recommendation? | Provisional until stage 06: [send the Mens email to all three past-purchase audiences by default](reports/02_02_email_by_segment.md), because it is worth sending in each. It beat the Womens email only among buyers of both lines, a fragile exploratory result. If the Womens email must be used, send it to customers who bought only women's merchandise, where it is also worth sending and neither email was shown better. |
+| 8 | Which audience would you target the Mens version to, and the Womens version to, given the results of the test? What data do you have to support your recommendation? | [Send the Mens email to all three past-purchase audiences by default](reports/02_02_email_by_segment.md), because it is worth sending in each, in at least 14 of the 16 margin and cost combinations of [stage 06](reports/06_01_profit_sensitivity.md). It beat the Womens email only among buyers of both lines, a fragile exploratory result. If the Womens email must be used, send it to customers who bought only women's merchandise, where it is also worth sending (15 of 16 combinations) and neither email was shown better. |
 
 ## Progress
 
@@ -80,16 +81,16 @@ These are the original questions from the challenge, quoted verbatim. Each answe
 | [Experiment validity checks](reports/00_02_experiment_validity.md) | Nov 4, 2026 | Done |
 | [Analysis plan](analysis_plan.md) | Nov 5, 2026 | Done |
 | [Average effects](reports/01_01_average_effects.md) | Nov 8, 2026 | Done |
-| [Segment effects](reports/02_01_segment_effects.md) | Nov 15, 2026 | Done; its memo is merged into the final decision memo |
+| [Segment effects](reports/02_01_segment_effects.md) and [email by segment](reports/02_02_email_by_segment.md) | Nov 15, 2026 | Done; its memo is merged into the final decision memo |
 | Uplift model comparison and bias demonstration | Nov 22, 2026 | Partly done: [uplift models](reports/04_01_uplift_models.md) |
-| Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [rule v1](reports/03_01_targeting_rule.md) |
+| Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [targeting answers](reports/03_01_targeting_rule.md) and [profit and sensitivity](reports/06_01_profit_sensitivity.md); report and memo not started |
 | v1.0 release | Nov 29, 2026 | Not started |
 
 ## Known limitations
 
 - The data is from 2008, and customer behavior and email channels have changed since then.
 - Outcomes were tracked for only two weeks, so longer-term effects cannot be measured.
-- The dataset does not include margin or cost per email. Both will be stated assumptions, and conclusions that depend on them will be tested with sensitivity analysis.
+- The dataset does not include margin or cost per email. Both are stated assumptions, and [stage 06](reports/06_01_profit_sensitivity.md) tests the conclusions across a range of values.
 - The bias demonstration is a simulation built from public data. It does not use real company data.
 
 ## How this project was built

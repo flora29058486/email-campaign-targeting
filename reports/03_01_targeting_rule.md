@@ -26,7 +26,7 @@ Choices 1 to 5 below were **fixed before the rule was evaluated on held-out data
 
 ## Answers
 
-**The Mens email pays off on average, and no tested list was shown to choose customers better than random selection.** Both answers are provisional until stage 06 tests other margins and costs.
+**The Mens email pays off on average, and no tested list was shown to choose customers better than random selection.** [Stage 06](06_01_profit_sensitivity.md) found that both stand under every margin and cost tested.
 
 **Question 3: send the Mens email to 10,000 customers drawn at random from all 64,000.**
 

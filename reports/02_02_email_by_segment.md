@@ -21,7 +21,7 @@ These are quoted from the original challenge. The [segment effects report](02_01
 
 **Question 5: no difference across segments was shown for spend.** The Mens email's lead did not change significantly in any of the six splits. This does not mean the lead is the same everywhere: the tests could reliably detect only changes of about $1.09 to $1.67 between two segments, or $0.46 per spend level, against an average lead of $0.35. Visits did differ by past purchases, but that is descriptive only.
 
-**Question 8: send the Mens email to all three audiences by default. If the Womens email must be used, send it to customers who bought only women's merchandise.** The Mens email is worth sending in each audience. The Womens email is worth sending only among women's-only buyers, where neither email was shown better. Among buyers of both lines the Mens email was better, but that result is fragile. Stage 06 tests these recommendations under other margins and costs.
+**Question 8: send the Mens email to all three audiences by default. If the Womens email must be used, send it to customers who bought only women's merchandise.** The Mens email is worth sending in each audience. The Womens email is worth sending only among women's-only buyers, where neither email was shown better. Among buyers of both lines the Mens email was better, but that result is fragile. [Stage 06](06_01_profit_sensitivity.md) found that they stand under every margin and cost tested.
 
 ## Question 5: change in the Mens email's lead (spend)
 
