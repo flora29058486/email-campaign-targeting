@@ -215,3 +215,19 @@ These choices were fixed before the stage 06 notebook was run.
 
 ### Clarifying questions are removed from this log
 - **Decision:** this log records decisions, their reasons and who proposed them. I removed my clarifying questions from six earlier entries. **No decision, reason or attribution of a proposal changed.**
+
+## 2026-11-25
+
+### Stage 05 simulates targeted sending from the experiment
+These choices were fixed before the stage 05 notebook was run.
+
+- **Purpose:** show how far a comparison of emailed and non-emailed customers drifts from the experimental result when a company emails the customers who look most likely to buy, and how much adjustment can correct. It answers no challenge question.
+- **Method:** customers are dropped at random from the experiment, so that the email goes mostly to those who look likely to buy while the experiment's +\$0.77 remains the right answer. This is RCT rejection sampling ([Keith et al., 2023](https://arxiv.org/abs/2307.15176)), which Claude suggested.
+- **Decision:** I agreed to the design, including all three estimates, because leaving out one feature shows why adjustment cannot replace an experiment. The score, the scenarios and the 10% threshold are judgment calls.
+  - **Data and benchmark:** the Mens E-Mail and No E-Mail groups, 42,613 customers. The benchmark is the experiment's estimate on these customers, +\$0.77 per customer (stage 01).
+  - **Who looks likely to buy:** a score from 0 to 2, one point each for a purchase in the last 3 months and for \$200 or more of past-year spend.
+  - **Targeting:** three scenarios, giving the email to 50%, 50% and 50% of customers with scores 0, 1 and 2 (random, as a check), to 30%, 50% and 70%, and to 10%, 50% and 90%. Each is built by RCT rejection sampling: an emailed customer is kept with probability e ÷ 0.9 and a non-emailed one with (1 − e) ÷ 0.9, where e is the scenario's share for that score. Every score keeps the same share of its customers, so the kept customers resemble all 42,613 and the benchmark still applies.
+  - **Three estimates:** the plain difference in mean spend; adjusted for both features, by comparing within each of their four combinations and weighting by its share of kept customers; and adjusted for past-year spend only, as if recency had not been recorded.
+  - **No separate weighting estimate:** with two yes-or-no features, inverse probability weighting with propensities estimated in each combination gives the same estimate as comparing within combinations.
+  - **Repetitions and criterion:** 1,000 samples per scenario, seed 42. Each estimate is reported by its mean, its bias (mean minus benchmark), its empirical standard error (the standard deviation across samples) and the Monte Carlo standard error of its mean. **Bias counts as removed if its absolute value is below 10% of the benchmark, about \$0.08.**
+- **Limitation, stated before running:** stage 02 had shown that recent customers spend more even without an email, so the plain difference was expected to overstate the effect. This stage demonstrates a known mechanism and is not a finding.
