@@ -13,6 +13,7 @@ An independent project that uses a public randomized experiment of 64,000 retail
 - **If only 10,000 customers can be emailed, send the Mens email to 10,000 drawn at random. If 10,000 must be left out, choose them at random too.** Neither a [two-feature rule](reports/03_01_targeting_rule.md) nor an [uplift model using all seven features](reports/04_01_uplift_models.md) was shown to beat random selection on held-out data.
 - **This data could not show which customers respond more to the email.** The rule's top cell gained $2.27 per customer in training but $1.37 on the test half, a case of regression to the mean. How good each list looks also depends on how random selection is measured, but none is shown to be better either way.
 - **These answers hold under every margin and cost tested** ([profit and sensitivity](reports/06_01_profit_sensitivity.md)). Emailing a random 10,000 customers earns about $3,000 over two weeks at the base case, and the Mens email stays worth sending while each email costs less than about $0.15 to $0.29, depending on the margin.
+- **Without random assignment, a simple comparison would have overstated the Mens email's effect by up to 69%** ([bias demonstration](reports/05_01_bias_demonstration.md)). Adjusting for the features used to choose customers removed the bias, but leaving one of them out left up to 38%.
 
 ## Why this project
 
@@ -54,7 +55,7 @@ The data is not stored in this repository. [`src/download_data.py`](src/download
 | 02 Segment effects | For whom did the emails work better? | 5, 6, 8 | [Segment effects](reports/02_01_segment_effects.md), [email by segment](reports/02_02_email_by_segment.md) |
 | 03 Targeting rule | Whom should we email, and whom should we suppress? | 3, 4 | [Targeting rule](reports/03_01_targeting_rule.md) |
 | 04 Uplift models | Can a model target better than a simple rule or random selection? | 3, 4 (supporting) | [Uplift models](reports/04_01_uplift_models.md) |
-| 05 Bias demonstration | How wrong would the estimates be without random assignment? | None | Not started |
+| 05 Bias demonstration | How wrong would the estimates be without random assignment? | None | [Bias demonstration](reports/05_01_bias_demonstration.md) |
 | 06 Profit and sensitivity | Is sending worth it under different cost assumptions? | 3, 4, 8 (final) | [Profit and sensitivity](reports/06_01_profit_sensitivity.md) |
 
 ## Challenge questions
@@ -82,7 +83,7 @@ These are the original questions from the challenge, quoted verbatim. Each answe
 | [Analysis plan](analysis_plan.md) | Nov 5, 2026 | Done |
 | [Average effects](reports/01_01_average_effects.md) | Nov 8, 2026 | Done |
 | [Segment effects](reports/02_01_segment_effects.md) and [email by segment](reports/02_02_email_by_segment.md) | Nov 15, 2026 | Done; its memo is merged into the final decision memo |
-| Uplift model comparison and bias demonstration | Nov 22, 2026 | Partly done: [uplift models](reports/04_01_uplift_models.md) |
+| Uplift model comparison and bias demonstration | Nov 22, 2026 | Done: [uplift models](reports/04_01_uplift_models.md) and [bias demonstration](reports/05_01_bias_demonstration.md), the latter on Nov 26 |
 | Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [targeting answers](reports/03_01_targeting_rule.md) and [profit and sensitivity](reports/06_01_profit_sensitivity.md); report and memo not started |
 | v1.0 release | Nov 29, 2026 | Not started |
 
