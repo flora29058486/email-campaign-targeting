@@ -2,9 +2,15 @@
 
 An independent project that uses a public randomized experiment of 64,000 retail customers to answer two decision questions: **who should receive a marketing email, and is sending it worth the cost?**
 
-> **Status: in progress (started November 2026).** All eight challenge questions are answered below. The final targeting rule will appear at the top of this page when v1.0 is released.
+> **Status: in progress (started November 2026).** All analyses are complete and all eight challenge questions are answered. A one-page decision memo and a single command to reproduce the analysis will be added before the v1.0 release.
 
-## Results so far
+## Start here
+
+- **[Technical report](reports/technical_report.md):** the design, results and limitations in one document.
+- **[Answers to the challenge questions](reports/challenge_answers.md):** the eight original questions, answered one by one with the evidence behind each answer.
+- **[Analysis map](#analysis-map):** the stage reports and notebooks that hold the full analysis.
+
+## Main findings
 
 - **Both emails raised spend over the two weeks after the campaign:** by about $0.77 per customer for the Mens email and $0.42 for the Womens email ([average effects](reports/01_01_average_effects.md)).
 - **The Mens email outperformed the Womens email** on spend, visits and conversion. Its lead on spend is significant but imprecisely estimated.
@@ -33,20 +39,11 @@ Website visits, purchases and spend were tracked for two weeks after the campaig
 
 The data is not stored in this repository. [`src/download_data.py`](src/download_data.py) downloads it from the author's website and checks its dimensions.
 
-## Approach
-
-1. **Experiment validity:** check that randomization held, using a sample-ratio test and covariate balance.
-2. **Analysis plan:** commit the metrics, segment hypotheses and multiple-testing correction before looking at any segment-level results.
-3. **Average effects:** compare each email with no email, with confidence intervals. Spend is the primary metric; visits and conversion are secondary.
-4. **Heterogeneous effects:** estimate effects for the pre-specified segments, and label anything else as exploratory.
-5. **Targeting rule:** convert the segment estimates into a first profit-based rule for whom to email.
-6. **Uplift models:** compare models with the simpler choices on held-out data. A simpler choice is kept unless a more complex one is shown to be better.
-7. **Bias demonstration:** simulate non-random targeting from the experimental data to show how far observational estimates can drift from the experimental benchmark.
-8. **Profit and sensitivity:** finalize the rule, with sensitivity analysis on margin and cost per email.
-
 ## Analysis map
 
 **Each stage answers one question and builds on the stage before it.** File names start with the stage number, so `02_01_segment_effects` is the first notebook of stage 02.
+
+**Every test, threshold and decision rule was written down before the outcomes it judged were viewed:** first in the [analysis plan](analysis_plan.md), then in each stage's design in [`DECISIONS.md`](DECISIONS.md). A more complex targeting method replaces a simpler one only if it is shown to be better on held-out data, and checks added after the results are labeled as such.
 
 | Stage | Question it answers | Challenge questions | Files |
 | --- | --- | --- | --- |
@@ -57,21 +54,6 @@ The data is not stored in this repository. [`src/download_data.py`](src/download
 | 04 Uplift models | Can a model target better than a simple rule or random selection? | 3, 4 (supporting) | [Uplift models](reports/04_01_uplift_models.md) |
 | 05 Bias demonstration | How wrong would the estimates be without random assignment? | None | [Bias demonstration](reports/05_01_bias_demonstration.md) |
 | 06 Profit and sensitivity | Is sending worth it under different cost assumptions? | 3, 4, 8 (final) | [Profit and sensitivity](reports/06_01_profit_sensitivity.md) |
-
-## Challenge questions
-
-These are the original questions from the challenge, quoted verbatim. Each answer links to the report behind it.
-
-| # | Question | Answer |
-| --- | --- | --- |
-| 1 | Which e-mail campaign performed the best, the Mens version, or the Womens version? | [The Mens email](reports/01_01_average_effects.md). Its lead over the Womens email is significant but imprecisely estimated. |
-| 2 | How much incremental sales per customer did the Mens version of the e-mail campaign drive? How much incremental sales per customer did the Womens version of the e-mail campaign drive? | [About $0.77 per customer for the Mens email and $0.42 for the Womens email](reports/01_01_average_effects.md), over two weeks. |
-| 3 | If you could only send an e-mail campaign to the best 10,000 customers, which customers would receive the e-mail campaign? Why? | [Send the Mens email to 10,000 customers drawn at random from all 64,000](reports/03_01_targeting_rule.md). The Mens email did best on average (+$0.77 per customer, 95% CI $0.49 to $1.05). Customers are drawn at random because no list passed the threshold set before testing: on held-out data, the segment rule beat a random 10,000 by $0.12 per customer (-$1.25 to $1.43) and [the uplift model](reports/04_01_uplift_models.md) by $0.11 (-$1.15 to $1.32). In a check added later, against the test-half average, both gaps rise to $0.51, and both intervals still include zero. This does not mean that all customers respond equally, only that this data could not identify the best 10,000. Under every margin and cost tested in [stage 06](reports/06_01_profit_sensitivity.md), this earns a profit: about $3,000 at the base case. |
-| 4 | If you had to eliminate 10,000 customers from receiving an e-mail campaign, which customers would you suppress from the campaign? Why? | [Avoid suppressing if possible; if 10,000 customers must be suppressed, choose them at random](reports/03_01_targeting_rule.md). No list passed the same threshold: compared with a random 10,000, the segment rule's list gave up $0.56 less per customer (-$1.03 to $2.27) and [the uplift model's](reports/04_01_uplift_models.md) $0.45 less (-$0.91 to $1.90). A later check showed that most of these gaps came from that one random draw: against the test-half average, they are $0.22 and -$0.01, and both intervals still include zero. Suppressing a random 10,000 from the Mens email would give up about $7,700 in sales and $3,000 in profit (95% CI $1,900 to $4,100) over two weeks, at a 40% margin and $0.008 per email, and an estimated $1,300 or more under every margin and cost tested in [stage 06](reports/06_01_profit_sensitivity.md). This rests on the average effect: on the test half, six of seven customer cells are uncertain. |
-| 5 | Did the Mens version of the e-mail campaign perform different than the Womens version of the e-mail campaign, across various customer segments? | [Not shown for spend](reports/02_02_email_by_segment.md): the Mens email's lead did not differ significantly across any of six segment splits after correction (exploratory). Visits differed by past purchases, but that is descriptive only. |
-| 6 | Did the campaigns perform different when measured across different metrics, like Visitors, Conversion, and Total Spend? | [The Mens email leads on all three](reports/01_01_average_effects.md): by $0.35 per customer in spend, 3.14 percentage points in visits and 0.37 points in conversion. By segment the metrics differ: [visits vary with past purchases, while no difference was shown for spend](reports/02_02_email_by_segment.md). Visits and conversion are supporting evidence, because they are not corrected for multiple testing. |
-| 7 | Did you observe any anomalies, or odd findings? | [Yes, three](reports/00_01_eda_summary.md): spend stops at exactly $499 for 12 buyers, which may indicate a cap; no customer under $200 of past-year spend bought both men's and women's merchandise; and 6,562 rows exactly repeat an earlier row. The causes of the first two are unknown. The repeated rows are kept, because without a customer ID they cannot be told apart from different customers with the same values. |
-| 8 | Which audience would you target the Mens version to, and the Womens version to, given the results of the test? What data do you have to support your recommendation? | [Send the Mens email to all three past-purchase audiences by default](reports/02_02_email_by_segment.md), because it is worth sending in each, in at least 14 of the 16 margin and cost combinations of [stage 06](reports/06_01_profit_sensitivity.md). It beat the Womens email only among buyers of both lines, a fragile exploratory result. If the Womens email must be used, send it to customers who bought only women's merchandise, where it is also worth sending (15 of 16 combinations) and neither email was shown better. |
 
 ## Progress
 
@@ -84,7 +66,7 @@ These are the original questions from the challenge, quoted verbatim. Each answe
 | [Average effects](reports/01_01_average_effects.md) | Nov 8, 2026 | Done |
 | [Segment effects](reports/02_01_segment_effects.md) and [email by segment](reports/02_02_email_by_segment.md) | Nov 15, 2026 | Done; its memo is merged into the final decision memo |
 | Uplift model comparison and bias demonstration | Nov 22, 2026 | Done: [uplift models](reports/04_01_uplift_models.md) and [bias demonstration](reports/05_01_bias_demonstration.md), the latter on Nov 26 |
-| Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [targeting answers](reports/03_01_targeting_rule.md) and [profit and sensitivity](reports/06_01_profit_sensitivity.md); report and memo not started |
+| Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [targeting answers](reports/03_01_targeting_rule.md), [profit and sensitivity](reports/06_01_profit_sensitivity.md) and the [technical report](reports/technical_report.md), the latter on Nov 27; memo not started |
 | v1.0 release | Nov 29, 2026 | Not started |
 
 ## Known limitations
@@ -103,7 +85,7 @@ I designed the analysis and made the final call on each methodological decision.
 ```text
 data/             Downloaded data (not tracked by Git)
 notebooks/        Analysis notebooks
-reports/          Data dictionary and written reports
+reports/          Data dictionary, stage reports, technical report and challenge answers
 src/              Reusable code, including the data download script
 analysis_plan.md  Metrics, hypotheses and decision rule, committed before group outcomes were viewed
 DECISIONS.md      Dated log of analytical decisions, including mistakes and dropped ideas
