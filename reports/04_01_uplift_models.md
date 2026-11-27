@@ -85,7 +85,7 @@ Question 4's first two rows use the emails the model would send. The last row su
 Scores are the incremental spend per selected customer within each held-out fold of the training half.
 
 - **Both models scored higher when trained on visits or conversion than on spend,** as expected from how rare purchases are.
-- **The T-learner trained on spend scored below zero, the worst of the six.** Each of its group models learned from only about 80 buyers per fold, some of whom spent several hundred dollars, so it fitted a few large purchases that did not recur. The linear model cannot bend to fit single buyers, which made it steadier with this little data.
+- **The T-learner trained on spend scored below zero, the worst of the six.** A likely explanation, not tested here, is that each of its group models learned from only about 80 buyers per fold, some of whom spent several hundred dollars, and fitted a few large purchases that did not recur. The linear model cannot bend to fit single buyers, which may have made it steadier with this little data.
 - **The scores are very noisy,** because each fold selects only about 1,000 customers. The ranking of the six is therefore a best bet. The winner's score fell from $1.95 in cross-validation to $1.12 on the test half, consistent with picking the highest of six noisy scores.
 
 ## Whom the model selected
@@ -119,7 +119,7 @@ Scores are the incremental spend per selected customer within each held-out fold
 - **For questions 3 and 4: choose at random.** Neither a two-feature rule nor a seven-feature model was shown to select better customers, to email or to suppress, than random selection. Send the Mens email as widely as the budget allows, and when the number is limited, draw the customers at random. **The case for sending rests on the average effect across all customers** ($0.77, 95% CI $0.49 to $1.05, against a $0.02 break-even), not on evidence that it pays in every cell.
 - **For the business:** building and maintaining a targeting model would add cost without a demonstrated gain on this data.
 - **For stage 06:** the profit and sensitivity analysis uses the Mens email sent broadly as the main case.
-- **For a new experiment:** size it from the smallest gain that would matter to the business, not from the gaps observed here. The first version of this report sized one at about 71,000 customers per list from the $0.45 saving. **That figure should not be used, because the saving depends on the random draw.**
+- **For a new experiment:** compare the model with random selection directly, in three randomly assigned groups: no email, the Mens email to a random share, and the same share chosen by the model, as in the [decision memo](decision_memo.md#next-step). Size it from the smallest gain that would matter to the business, not from the gaps observed here. The first version of this report sized one at about 71,000 customers per list from the $0.45 saving. **That figure should not be used, because the saving depends on the random draw.**
 
 ## Limitations
 

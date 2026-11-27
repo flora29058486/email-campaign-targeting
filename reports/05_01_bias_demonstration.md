@@ -15,7 +15,7 @@ Most companies do not randomize. They email the customers who look most likely t
 
 ## How the targeted data were made
 
-The idea is to start from the experiment, where the right answer is known, and drop customers until the remaining data look as if a company had chosen whom to email.
+The idea is to start from the experiment, where random assignment provides a benchmark, and drop customers until the remaining data look as if a company had chosen whom to email.
 
 1. **Who looks likely to buy.** Each customer gets one point for a purchase in the last 3 months and one point for $200 or more of past-year spend. Of the 42,613 customers in the Mens E-Mail and No E-Mail groups, 17,797 (42%) score 0, 16,975 (40%) score 1, and 7,841 (18%) score 2.
 2. **How strongly the company targets.** Three scenarios set the share of customers who get the email at each score:
@@ -27,7 +27,7 @@ The idea is to start from the experiment, where the right answer is known, and d
    | Strong targeting | 10% | 50% | 90% |
 
 3. **Dropping customers to match a scenario.** In the experiment, about half of each score received the email. To make 90% of score-2 customers emailed, keep every emailed customer with a score of 2 and about 1 in 9 of the non-emailed ones. For score 0, do the reverse. In general, an emailed customer is kept with probability e ÷ 0.9, and a non-emailed one with (1 − e) ÷ 0.9, where e is the scenario's share for that score. This method is called RCT rejection sampling ([Keith et al., 2023](https://arxiv.org/abs/2307.15176)).
-4. **Why $0.77 is still the right answer.** Every score keeps the same share of its customers, about 56%, so the kept customers have the same mix of scores as everyone. Within a score, who got the email was still decided by the experiment's random draw. **Only the link between score and email has changed, which is what targeting does.** The notebook checks that each score's share emailed matches its target.
+4. **Why $0.77 is still the benchmark.** Every score keeps the same share of its customers, about 56%, so the kept customers have the same mix of scores as everyone. Within a score, who got the email was still decided by the experiment's random draw. **Only the link between score and email has changed, which is what targeting does.** The notebook checks that each score's share emailed matches its target.
 5. **Repeating it.** Each scenario is drawn 1,000 times with different random drops, keeping about 23,700 customers each time, so that results reflect the method and not one lucky draw.
 
 ## Three ways to estimate the effect
