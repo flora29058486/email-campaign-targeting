@@ -2,7 +2,7 @@
 
 An independent project that uses a public randomized experiment of 64,000 retail customers to answer two decision questions: **who should receive a marketing email, and is sending it worth the cost?**
 
-> **Status: in progress (started November 2026).** All analyses are complete and all eight challenge questions are answered. A single command to reproduce the analysis will be added before the v1.0 release.
+> **Status: in progress (started November 2026).** All analyses and reports are complete, and all eight challenge questions are answered. Version 1.0 will be released after a final check.
 
 ## Start here
 
@@ -87,12 +87,12 @@ I designed the analysis and made the final call on each methodological decision.
 data/             Downloaded data (not tracked by Git)
 notebooks/        Analysis notebooks
 reports/          Data dictionary, stage reports, technical report, challenge answers and decision memo
-src/              Reusable code, including the data download script
+src/              Shared code, the data download script and the reproduction command
 analysis_plan.md  Metrics, hypotheses and decision rule, committed before group outcomes were viewed
 DECISIONS.md      Dated log of analytical decisions, including mistakes and dropped ideas
 ```
 
-## Setup
+## Reproducing the analysis
 
 Requires Python 3.11. Run these commands from the repository root.
 
@@ -101,7 +101,7 @@ python -m venv .venv
 # Windows: .venv\Scripts\activate
 # macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
-python src/download_data.py
+python src/reproduce.py
 ```
 
-A single command to reproduce the full analysis will be added before v1.0.
+**[`src/reproduce.py`](src/reproduce.py) reruns the whole analysis.** It downloads the data if it is missing, checks by its SHA-256 hash that it is the file this project used, and runs the ten notebooks in stage order, rewriting their outputs and the figures. If every result is unchanged, `git status` shows no modified files afterwards. In a fresh environment on Windows 11, it took about 4 minutes, and every output and figure matched the committed versions. It has not been tested on macOS or Linux. To download the data only, run `python src/download_data.py`.

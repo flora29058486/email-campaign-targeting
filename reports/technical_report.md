@@ -195,7 +195,7 @@ Without held-out data, either would have looked like a large gain.
 - **Code:**
   - one notebook per stage in [`notebooks/`](../notebooks), numbered as in the README's [analysis map](../README.md#analysis-map);
   - the shared split and random baseline in [`src/prepare.py`](../src/prepare.py);
-  - the data downloaded by [`src/download_data.py`](../src/download_data.py).
+  - the data downloaded and checked by [`src/download_data.py`](../src/download_data.py).
 
   Every random step uses seed 42.
 - **Decisions:** [`DECISIONS.md`](../DECISIONS.md) records each choice by date, with its reason and who proposed it. Designs committed before they were run: the [analysis plan](https://github.com/flora29058486/email-campaign-targeting/commit/bb94140), stages [03](https://github.com/flora29058486/email-campaign-targeting/commit/ffbb9c0), [04](https://github.com/flora29058486/email-campaign-targeting/commit/5b609ec), [05](https://github.com/flora29058486/email-campaign-targeting/commit/860af22) and [06](https://github.com/flora29058486/email-campaign-targeting/commit/ab19efd), and the [criteria for questions 5 and 8](https://github.com/flora29058486/email-campaign-targeting/commit/3e7dc48).
@@ -204,7 +204,7 @@ Without held-out data, either would have looked like a large gain.
   - "not shown to be better" first worded as "equal";
   - the Womens email's question 8 audience first including buyers of both lines;
   - a suppression list presented as a lead before the random draw was checked.
-- **Rerunning the analysis:** `pip install -r requirements.txt`, then `python src/download_data.py`. **[Placeholder: the single command that reruns every notebook will be added here before v1.0.]**
+- **Rerunning the analysis:** after `pip install -r requirements.txt`, the command `python src/reproduce.py` downloads the data if it is missing, checks it by its SHA-256 hash, and reruns every notebook in stage order. **In a fresh environment, every output and figure matched the committed versions** (Windows 11, Python 3.11, about 4 minutes).
 - **How the project was built:** see the [README](../README.md#how-this-project-was-built).
 
 ## References
