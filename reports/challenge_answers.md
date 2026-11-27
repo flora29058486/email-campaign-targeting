@@ -89,6 +89,6 @@ Sources: [EDA summary](00_01_eda_summary.md), [experiment validity](00_02_experi
 
 - **The Mens email is worth sending in each audience,** in at least 14 of the 16 margin and cost combinations of [stage 06](06_01_profit_sensitivity.md).
 - **It beat the Womens email only among buyers of both lines,** a fragile exploratory result: it rests on 53 and 31 buyers.
-- **Among women's-only buyers, the Womens email is also worth sending** (15 of 16 combinations), and neither email was shown better. In the other two audiences, it was never worth sending.
+- **Among women's-only buyers, the Womens email is also worth sending** (15 of 16 combinations), and neither email was shown better. In the other two audiences, it was at best uncertain under every margin and cost tested.
 
 Sources: [email by segment](02_02_email_by_segment.md), [profit and sensitivity](06_01_profit_sensitivity.md).

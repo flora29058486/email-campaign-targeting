@@ -2,10 +2,11 @@
 
 An independent project that uses a public randomized experiment of 64,000 retail customers to answer two decision questions: **who should receive a marketing email, and is sending it worth the cost?**
 
-> **Status: in progress (started November 2026).** All analyses are complete and all eight challenge questions are answered. A one-page decision memo and a single command to reproduce the analysis will be added before the v1.0 release.
+> **Status: in progress (started November 2026).** All analyses are complete and all eight challenge questions are answered. A single command to reproduce the analysis will be added before the v1.0 release.
 
 ## Start here
 
+- **[Decision memo](reports/decision_memo.md):** the recommendation for a marketing team, in brief.
 - **[Technical report](reports/technical_report.md):** the design, results and limitations in one document.
 - **[Answers to the challenge questions](reports/challenge_answers.md):** the eight original questions, answered one by one with the evidence behind each answer.
 - **[Analysis map](#analysis-map):** the stage reports and notebooks that hold the full analysis.
@@ -66,7 +67,7 @@ The data is not stored in this repository. [`src/download_data.py`](src/download
 | [Average effects](reports/01_01_average_effects.md) | Nov 8, 2026 | Done |
 | [Segment effects](reports/02_01_segment_effects.md) and [email by segment](reports/02_02_email_by_segment.md) | Nov 15, 2026 | Done; its memo is merged into the final decision memo |
 | Uplift model comparison and bias demonstration | Nov 22, 2026 | Done: [uplift models](reports/04_01_uplift_models.md) and [bias demonstration](reports/05_01_bias_demonstration.md), the latter on Nov 26 |
-| Targeting rule, technical report and decision memo | Nov 26, 2026 | Partly done: [targeting answers](reports/03_01_targeting_rule.md), [profit and sensitivity](reports/06_01_profit_sensitivity.md) and the [technical report](reports/technical_report.md), the latter on Nov 27; memo not started |
+| Targeting rule, technical report and decision memo | Nov 26, 2026 | Done: [targeting answers](reports/03_01_targeting_rule.md), [profit and sensitivity](reports/06_01_profit_sensitivity.md), the [technical report](reports/technical_report.md) and the [decision memo](reports/decision_memo.md), the latter two on Nov 27 |
 | v1.0 release | Nov 29, 2026 | Not started |
 
 ## Known limitations
@@ -85,7 +86,7 @@ I designed the analysis and made the final call on each methodological decision.
 ```text
 data/             Downloaded data (not tracked by Git)
 notebooks/        Analysis notebooks
-reports/          Data dictionary, stage reports, technical report and challenge answers
+reports/          Data dictionary, stage reports, technical report, challenge answers and decision memo
 src/              Reusable code, including the data download script
 analysis_plan.md  Metrics, hypotheses and decision rule, committed before group outcomes were viewed
 DECISIONS.md      Dated log of analytical decisions, including mistakes and dropped ideas
